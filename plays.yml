@@ -2,9 +2,11 @@
   - hosts: ansible_azure
     become: true
     tasks:
-    - name: Installing Multiple Packages
-      apt: name={{item}} state=present update_cache=yes
-      with_items:
-      - python-pip
-      - python3-pip
-      - python-virtualenv
+    - name: Installing Nginx Packages
+      apt: name=nginx state=present update_cache=yes
+    - name: Restarting Nginx
+      service: name=nginx state=started enables=yes 
+      # with_items:
+      # - python-pip
+      # - python3-pip
+      # - python-virtualenv
