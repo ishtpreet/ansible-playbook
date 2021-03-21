@@ -4,8 +4,17 @@
     tasks:
     - name: Installing Nginx Packages
       apt: name=nginx state=present update_cache=yes
-    - name: Restarting Nginx
-      service: name=nginx state=started enabled=yes 
+
+    - name: ensure Nginx is started
+      service: name=nginx state=started enabled=yes
+
+    - name: copy demo webapp file
+      copy: src=home/azureuser/split dest=/var/www/html
+      notify: restart Nginx 
+    handlers:
+      - name: restart Nginx
+        service: name=nginx state=restarted 
+
       # with_items:
       # - python-pip
       # - python3-pip
